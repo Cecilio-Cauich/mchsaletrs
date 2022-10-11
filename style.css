@@ -1,0 +1,28 @@
+body{
+    display: flex;
+    justify-content: center;
+    background-color: lightgray;
+
+}
+.main-containter{
+    background-color: lightgoldenrodyellow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    
+}
+
+#foto{
+    width: 400px;
+    height: 400px;
+}
+
+#refreshpage{
+    margin: 10px 5px;
+    width: 100px;
+    height: 40px;
+    background-color: lightseagreen;
+    border: none;
+    border-radius: 3px;
+}
