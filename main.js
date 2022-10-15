@@ -2,7 +2,7 @@ console.log("Hello word");
 
 const btn_refresh = document.querySelector("#btn-refreshpage");
 const btn_clean = document.querySelector("#btn-clean");
-const contenedorprin = document.querySelector(".main-containter");
+const contenedorprin = document.querySelector("#cont-content");
 
 
 function reload() {
@@ -19,15 +19,26 @@ async function reload() {
   const data = await res.json();
   for (let index = 0; index < cantidadgatos; index++) {
     const inimagen = document.createElement("img");
-    inimagen.src = data[index].url;
+    const contenedorBtnImg = document.createElement("div");
+    const btnFavorito = document.createElement("button","Guardar");
+  
     inimagen.setAttribute("class","foto");
-    contenedorprin.append(inimagen);
-
+    contenedorBtnImg.setAttribute("class","cont-img-btn")
+    btnFavorito.setAttribute("class","btn-fav");
+    btnFavorito.type='button';
+    btnFavorito.innerHTML='Guardar';
+    
+    inimagen.src = data[index].url;
+  
+    contenedorBtnImg.append(inimagen);
+    contenedorBtnImg.append(btnFavorito);
+    contenedorprin.append(contenedorBtnImg);
   }
+  
 }
 
 function cleancontainer() {
-  const elementosaeliminar = document.querySelectorAll('.foto');
+  const elementosaeliminar = document.querySelectorAll('.cont-img-btn');
   for(let elemento of elementosaeliminar){
     contenedorprin.removeChild(elemento);
   }
