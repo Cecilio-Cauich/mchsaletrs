@@ -20,6 +20,8 @@ body {
 #label-numgatos {
   font-size: 20px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #7d6e83;
+
 }
 #input-num {
   margin-top: 5px;
@@ -27,6 +29,7 @@ body {
   width: 60px;
   height: 25px;
   border-radius: 2px;
+  text-align: center;
 }
 
 .btns-input button {
