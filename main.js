@@ -6,6 +6,7 @@ const spanError = document.querySelector('#error');
 btn_refresh.addEventListener("click", loadRandomMichis, false);
 btn_clean.addEventListener("click", cleancontainer, false);
 
+//URL Base
 async function loadRandomMichis() {
   let cantidadgatos = document.querySelector("#input-num").value
 
@@ -19,15 +20,25 @@ async function loadRandomMichis() {
       const inimagen = document.createElement("img");
       const contenedorBtnImg = document.createElement("div");
       const btnFavourite = document.createElement("button","Guardar");
-    
+      
+      // agrega imagen
+      inimagen.src = data[index].url;
+
+      //el boton tiene el id de la imagen
+      btnFavourite.setAttribute("id",data[index].id);
+       
+      //atributos extras para la imagen, boton y el contenedor
       inimagen.setAttribute("class","foto");
       contenedorBtnImg.setAttribute("class","cont-img-btn")
       btnFavourite.setAttribute("class","btn-fav");
       btnFavourite.type='button';
       btnFavourite.innerHTML='Guardar';
       
-      inimagen.src = data[index].url;
-    
+
+      //En dado caso de onClick se manda el id de la imagen
+      btnFavourite.setAttribute("onClick",`saveFavoriteMichis('${btnFavourite.id}')`);
+     
+      //agregamoos todo al contenedor principal
       contenedorBtnImg.append(inimagen);
       contenedorBtnImg.append(btnFavourite);
       contenedorprin.append(contenedorBtnImg);
@@ -76,6 +87,25 @@ function cleancontainer() {
   }
 }
 
-loadFavoritesMichis();
+
+async function saveFavoriteMichis(cat_id){
+  const res = await fetch("https://api.thecatapi.com/v1/favourites?api_key=live_Y011HAuLgyQFPeUMLJ193i0XxMEp2bE6LT5MKfAtpc9lX1p7e8O59jO28cAdIdnX",{
+    method  : 'POST',
+    headers:{
+      'Content-Type':'application/json',      
+    },
+    body : JSON.stringify({
+      image_id:cat_id
+    })
+  });
+
+
+  if(res.status !== 200){
+    spanError.innerHTML = "Hubo un error: "+res.status+data.message
+  }{
+    alert(`gato_id: ${cat_id} guardado existosamente`);
+  }
+  
+}
 
 
