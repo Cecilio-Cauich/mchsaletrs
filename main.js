@@ -6,12 +6,11 @@ const spanError = document.querySelector("#error");
 
 btn_refresh.addEventListener("click", loadRandomMichis, false);
 btn_clean.addEventListener("click", cleancontainer, false);
-btn_favorite.addEventListener("click",loadFavoriteMichis, false)
-
+btn_favorite.addEventListener("click", loadFavoriteMichis, false);
 
 //URL Base
 const URL_RANDOM = "https://api.thecatapi.com/v1/images/search?";
-const URL_FAVORITES = "https://api.thecatapi.com/v1/favourites?";
+const URL_FAVORITES = "https://api.thecatapi.com/v1/favourites";
 const API_KEY =
   "api_key=live_Y011HAuLgyQFPeUMLJ193i0XxMEp2bE6LT5MKfAtpc9lX1p7e8O59jO28cAdIdnX";
 
@@ -19,6 +18,7 @@ const API_KEY =
 //--------Funcitions
 //--
 async function loadRandomMichis() {
+  cleancontainer();
   let cantidadgatos = document.querySelector("#input-num").value;
 
   const res = await fetch(`${URL_RANDOM}limit=${cantidadgatos}&${API_KEY}`);
@@ -35,9 +35,6 @@ async function loadRandomMichis() {
       // agrega imagen
       inimagen.src = data[index].url;
 
-      //el boton tiene el id de la imagen
-      btnAddFav.setAttribute("id", data[index].id);
-
       //atributos extras para la imagen, boton y el contenedor
       inimagen.setAttribute("class", "foto");
       contenedorBtnImg.setAttribute("class", "cont-img-btn");
@@ -48,7 +45,7 @@ async function loadRandomMichis() {
       //En dado caso de onClick se manda el id de la imagen
       btnAddFav.setAttribute(
         "onClick",
-        `saveFavoriteMichis('${btnAddFav.id}')`
+        `saveFavoriteMichis('${data[index].id}')`
       );
 
       //agregamoos todo al contenedor principal
@@ -60,21 +57,19 @@ async function loadRandomMichis() {
 }
 
 async function loadFavoriteMichis() {
-  const res = await fetch(`${URL_FAVORITES}&${API_KEY}`);
+  cleancontainer();
+  const res = await fetch(`${URL_FAVORITES}?&${API_KEY}`);
   const data = await res.json();
   if (res.status !== 200) {
     spanError.innerHTML = "Hubo un error: " + res.status;
   } else {
-    data.forEach(michi => {
+    data.forEach((michi) => {
       const inimagen = document.createElement("img");
       const contenedorBtnImg = document.createElement("div");
       const btnDeleteFav = document.createElement("button");
 
       // agrega imagen
       inimagen.src = michi.image.url;
-
-      //el boton tiene el id de la imagen
-      btnDeleteFav.setAttribute("id", michi.image.url);
 
       //atributos extras para la imagen, boton y el contenedor
       inimagen.setAttribute("class", "foto");
@@ -83,10 +78,10 @@ async function loadFavoriteMichis() {
       btnDeleteFav.type = "button";
       btnDeleteFav.innerHTML = "Quitar";
 
-      //En dado caso de onClick se manda el id de la imagen
+      // En dado caso de onClick se manda el id de la imagen
       btnDeleteFav.setAttribute(
         "onClick",
-        `saveFavoriteMichis('${btnDeleteFav.id}')`
+        `deleteFavoritesMichis('${michi.id}')`
       );
 
       //agregamoos todo al contenedor principal
@@ -98,7 +93,7 @@ async function loadFavoriteMichis() {
 }
 
 async function saveFavoriteMichis(cat_id) {
-  const res = await fetch(`${URL_FAVORITES}${API_KEY}`, {
+  const res = await fetch(`${URL_FAVORITES}?${API_KEY}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -116,6 +111,18 @@ async function saveFavoriteMichis(cat_id) {
   }
 }
 
+async function deleteFavoritesMichis(cat_id) {
+  const res = await fetch(`${URL_FAVORITES}/${cat_id}?${API_KEY}`, {
+    method: "DELETE",
+  });
+
+  if (res.status !== 200) {
+    spanError.innerHTML = "Hubo un error: " + res.status + data.message;
+  }
+  {
+    alert(`gato_id: ${cat_id} eliminado existosamente`);
+  }
+}
 //--
 //-----Clean the container
 //--
@@ -125,5 +132,6 @@ function cleancontainer() {
     contenedorprin.removeChild(elemento);
   }
 }
-
-
+function reload(){
+  location.reload()
+}
