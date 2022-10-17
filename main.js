@@ -38,7 +38,7 @@ async function loadRandomMichis() {
       //atributos extras para la imagen, boton y el contenedor
       inimagen.setAttribute("class", "foto");
       contenedorBtnImg.setAttribute("class", "cont-img-btn");
-      btnAddFav.setAttribute("class", "btn-fav");
+      btnAddFav.setAttribute("class", "btn-img");
       btnAddFav.type = "button";
       btnAddFav.innerHTML = "Guardar";
 
@@ -74,7 +74,7 @@ async function loadFavoriteMichis() {
       //atributos extras para la imagen, boton y el contenedor
       inimagen.setAttribute("class", "foto");
       contenedorBtnImg.setAttribute("class", "cont-img-btn");
-      btnDeleteFav.setAttribute("class", "btn-fav");
+      btnDeleteFav.setAttribute("class", "btn-img");
       btnDeleteFav.type = "button";
       btnDeleteFav.innerHTML = "Quitar";
 
@@ -121,6 +121,7 @@ async function deleteFavoritesMichis(cat_id) {
   }
   {
     alert(`gato_id: ${cat_id} eliminado existosamente`);
+    loadFavoriteMichis();
   }
 }
 //--
@@ -132,6 +133,4 @@ function cleancontainer() {
     contenedorprin.removeChild(elemento);
   }
 }
-function reload(){
-  location.reload()
-}
+

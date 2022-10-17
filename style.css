@@ -14,12 +14,12 @@ body {
 }
 
 .title {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-family:'Courier New', Courier, monospace;
   color: #7d6e83;
 }
 #label-numgatos {
   font-size: 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Courier New', Courier, monospace;
   color: #7d6e83;
 
 }
@@ -39,6 +39,8 @@ body {
   background-color: #7d6e83;
   border: none;
   color: white;
+  font-family:'Courier New', Courier, monospace;
+
 }
 
 /* contenedor e imagenes */
@@ -52,12 +54,17 @@ body {
 .cont-img-btn{
   background-color:#716F81;
   margin: 5px;
+  
+
 }
-.btn-fav{
+.btn-img{
  border: none;
  margin-bottom: 5px;
  margin-left: 5px;
  align-self: flex-start;
+ background-color: #dfd3c3;
+ font-family:'Courier New', Courier, monospace;
+
 }
 .cont-img-btn {
   display: flex;
