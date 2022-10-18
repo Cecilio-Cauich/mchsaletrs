@@ -12,7 +12,7 @@ btn_favorite.addEventListener("click", loadFavoriteMichis, false);
 const URL_RANDOM = "https://api.thecatapi.com/v1/images/search?";
 const URL_FAVORITES = "https://api.thecatapi.com/v1/favourites";
 const API_KEY =
-  "api_key=live_Y011HAuLgyQFPeUMLJ193i0XxMEp2bE6LT5MKfAtpc9lX1p7e8O59jO28cAdIdnX";
+  "live_Y011HAuLgyQFPeUMLJ193i0XxMEp2bE6LT5MKfAtpc9lX1p7e8O59jO28cAdIdnX";
 
 //--
 //--------Funcitions
@@ -58,7 +58,12 @@ async function loadRandomMichis() {
 
 async function loadFavoriteMichis() {
   cleancontainer();
-  const res = await fetch(`${URL_FAVORITES}?&${API_KEY}`);
+  const res = await fetch(`${URL_FAVORITES}`,{
+    method: 'GET',
+    headers: {
+      'X-API-KEY':API_KEY,
+    },
+  });
   const data = await res.json();
   if (res.status !== 200) {
     spanError.innerHTML = "Hubo un error: " + res.status;
@@ -93,10 +98,11 @@ async function loadFavoriteMichis() {
 }
 
 async function saveFavoriteMichis(cat_id) {
-  const res = await fetch(`${URL_FAVORITES}?${API_KEY}`, {
+  const res = await fetch(`${URL_FAVORITES}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      'X-API-KEY':API_KEY,
     },
     body: JSON.stringify({
       image_id: cat_id,
@@ -112,8 +118,11 @@ async function saveFavoriteMichis(cat_id) {
 }
 
 async function deleteFavoritesMichis(cat_id) {
-  const res = await fetch(`${URL_FAVORITES}/${cat_id}?${API_KEY}`, {
+  const res = await fetch(`${URL_FAVORITES}/${cat_id}`, {
     method: "DELETE",
+    headers:{
+      'X-API-KEY':API_KEY,
+    }
   });
 
   if (res.status !== 200) {
