@@ -13,6 +13,7 @@ const URL_RANDOM = "https://api.thecatapi.com/v1/images/search?";
 const URL_FAVORITES = "https://api.thecatapi.com/v1/favourites";
 const API_KEY =
   "live_Y011HAuLgyQFPeUMLJ193i0XxMEp2bE6LT5MKfAtpc9lX1p7e8O59jO28cAdIdnX";
+const URL_UPLOAD = "https://api.thecatapi.com/v1/images/upload";
 
 //--
 //--------Funcitions
@@ -58,10 +59,10 @@ async function loadRandomMichis() {
 
 async function loadFavoriteMichis() {
   cleancontainer();
-  const res = await fetch(`${URL_FAVORITES}`,{
-    method: 'GET',
+  const res = await fetch(`${URL_FAVORITES}`, {
+    method: "GET",
     headers: {
-      'X-API-KEY':API_KEY,
+      "X-API-KEY": API_KEY,
     },
   });
   const data = await res.json();
@@ -102,7 +103,7 @@ async function saveFavoriteMichis(cat_id) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      'X-API-KEY':API_KEY,
+      "X-API-KEY": API_KEY,
     },
     body: JSON.stringify({
       image_id: cat_id,
@@ -120,9 +121,10 @@ async function saveFavoriteMichis(cat_id) {
 async function deleteFavoritesMichis(cat_id) {
   const res = await fetch(`${URL_FAVORITES}/${cat_id}`, {
     method: "DELETE",
-    headers:{
-      'X-API-KEY':API_KEY,
-    }
+    headers: {
+      "Content-Type": "text/plain",
+      "X-API-KEY": API_KEY,
+    },
   });
 
   if (res.status !== 200) {
@@ -143,3 +145,26 @@ function cleancontainer() {
   }
 }
 
+async function uploadPhoto() {
+  const form = document.getElementById("uploadingForm");
+  const formData = new FormData(form);
+  console.log(formData.get("file"));
+
+  const res = await fetch(URL_UPLOAD, {
+    method: "POST",
+    headers: {
+      "X-API-KEY": API_KEY,
+    },
+
+    body: formData,
+  });
+  const data = await res.json();
+  if (res.status !== 201) {
+    spanError.innerHTML = `Hubo un error al subir michi: ${res.status} ${data.message}`;
+  } else {
+    console.log("Foto cargada :)");
+    console.log({ data });
+    console.log(data.url);
+    saveFavoriteMichis(data.id);
+  }
+}
