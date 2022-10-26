@@ -17,7 +17,7 @@ body {
   font-family:'Courier New', Courier, monospace;
   color: #7d6e83;
 }
-#label-numgatos {
+#label-numgatos, #title-load-cat{
   font-size: 20px;
   font-family:'Courier New', Courier, monospace;
   color: #7d6e83;
@@ -32,7 +32,7 @@ body {
   text-align: center;
 }
 
-.btns-input button {
+.btns-input button, .load-item {
   margin: 10px 5px;
   width: 100px;
   height: 30px;
@@ -81,3 +81,5 @@ body {
 .btn-fav {
   width: 80px;
 }
+
+

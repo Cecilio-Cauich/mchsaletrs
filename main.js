@@ -1,12 +1,14 @@
 const btn_refresh = document.querySelector("#btn-refreshpage");
 const btn_clean = document.querySelector("#btn-clean");
 const btn_favorite = document.querySelector("#btn-favorite");
+const btn_uploadcat = document.querySelector('#btn-loadcat');
 const contenedorprin = document.querySelector("#cont-content");
 const spanError = document.querySelector("#error");
 
 btn_refresh.addEventListener("click", loadRandomMichis, false);
 btn_clean.addEventListener("click", cleancontainer, false);
 btn_favorite.addEventListener("click", loadFavoriteMichis, false);
+btn_uploadcat.addEventListener("click", createElementsLoad,false);
 
 //URL Base
 const URL_RANDOM = "https://api.thecatapi.com/v1/images/search?";
@@ -56,7 +58,6 @@ async function loadRandomMichis() {
     }
   }
 }
-
 async function loadFavoriteMichis() {
   cleancontainer();
   const res = await fetch(`${URL_FAVORITES}`, {
@@ -97,7 +98,6 @@ async function loadFavoriteMichis() {
     });
   }
 }
-
 async function saveFavoriteMichis(cat_id) {
   const res = await fetch(`${URL_FAVORITES}`, {
     method: "POST",
@@ -117,7 +117,6 @@ async function saveFavoriteMichis(cat_id) {
     alert(`gato_id: ${cat_id} guardado existosamente`);
   }
 }
-
 async function deleteFavoritesMichis(cat_id) {
   const res = await fetch(`${URL_FAVORITES}/${cat_id}`, {
     method: "DELETE",
@@ -135,16 +134,6 @@ async function deleteFavoritesMichis(cat_id) {
     loadFavoriteMichis();
   }
 }
-//--
-//-----Clean the container
-//--
-function cleancontainer() {
-  const elementosaeliminar = document.querySelectorAll(".cont-img-btn");
-  for (let elemento of elementosaeliminar) {
-    contenedorprin.removeChild(elemento);
-  }
-}
-
 async function uploadPhoto() {
   const form = document.getElementById("uploadingForm");
   const formData = new FormData(form);
@@ -162,9 +151,47 @@ async function uploadPhoto() {
   if (res.status !== 201) {
     spanError.innerHTML = `Hubo un error al subir michi: ${res.status} ${data.message}`;
   } else {
-    console.log("Foto cargada :)");
-    console.log({ data });
-    console.log(data.url);
     saveFavoriteMichis(data.id);
+    uploadPhoto();
+    alert(`gato_id: ${cat_id} subido existosamente puede verlo en favoritos`);
+
   }
 }
+//--
+//-----Clean the container
+//--
+function cleancontainer() {
+  const elementosaeliminar = document.querySelectorAll(".cont-img-btn");
+  for (let elemento of elementosaeliminar) {
+    contenedorprin.removeChild(elemento);
+  }
+}
+function createElementsLoad(){
+  cleancontainer();
+  const sectionUpLoad = document.createElement("section");
+  sectionUpLoad.setAttribute("id","uploadingMichi");
+
+  const h2UpLoad = document.createElement("h2");
+  h2UpLoad.setAttribute("id","title-load-cat");
+  h2UpLoad.innerText ="Selecciona una foto en tu maquina";
+
+  const formUpLoad = document.createElement("form");
+  formUpLoad.setAttribute("id","uploadingForm");
+
+  const inputUpLoad = document.createElement("input");
+  inputUpLoad.setAttribute("type","file");
+  inputUpLoad.setAttribute("name","file");
+
+  const buttonUpLoad = document.createElement("button");
+  buttonUpLoad.type="button";
+  buttonUpLoad.setAttribute("onClick","uploadPhoto()");
+  buttonUpLoad.innerHTML="Subir";
+  buttonUpLoad.setAttribute("class","load-item");
+
+  sectionUpLoad.append(h2UpLoad);
+  formUpLoad.append(inputUpLoad);
+  formUpLoad.append(buttonUpLoad);
+  sectionUpLoad.append(formUpLoad);
+  document.body.appendChild(sectionUpLoad);
+}
+
