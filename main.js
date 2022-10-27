@@ -24,9 +24,8 @@ async function loadRandomMichis() {
   cleancontainer();
   let cantidadgatos = document.querySelector("#input-num").value;
 
-  const res = await fetch(`${URL_RANDOM}limit=${cantidadgatos}&${API_KEY}`);
+  const res = await fetch(`${URL_RANDOM}limit=${cantidadgatos}&api_key=${API_KEY}`);
   const data = await res.json();
-
   if (res.status !== 200) {
     spanError.innerHTML = "Hubo un error: " + res.status + data.message;
   } else {
@@ -153,7 +152,7 @@ async function uploadPhoto() {
   } else {
     saveFavoriteMichis(data.id);
     uploadPhoto();
-    alert(`gato_id: ${cat_id} subido existosamente puede verlo en favoritos`);
+    alert(`gato_id: ${cat_id} subido existosamente puede verlo en FAVORITOS`);
 
   }
 }
