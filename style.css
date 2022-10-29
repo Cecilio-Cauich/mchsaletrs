@@ -85,6 +85,10 @@ body {
   width: 80px;
 }
 
+#cont-content h1{
+  text-align: justify;
+}
+
 #foot-creditos {
   position:fixed;
   left:0px;
