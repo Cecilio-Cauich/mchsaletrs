@@ -113,7 +113,7 @@ async function saveFavoriteMichis(cat_id) {
     spanError.innerHTML = "Hubo un error: " + res.status + data.message;
   }
   {
-    alert(`gato_id: ${cat_id} guardado existosamente`);
+    alert(`gato_id: ${cat_id} guardado existosamente lo puedes ver en Favoritos`);
   }
 }
 async function deleteFavoritesMichis(cat_id) {
@@ -152,7 +152,7 @@ async function uploadPhoto() {
   } else {
     saveFavoriteMichis(data.id);
     uploadPhoto();
-    alert(`gato_id: ${cat_id} subido existosamente puede verlo en FAVORITOS`);
+    alert(`gato_id: ${cat_id} cargado existosamente puede verlo en FAVORITOS`);
 
   }
 }
