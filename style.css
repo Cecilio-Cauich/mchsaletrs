@@ -107,9 +107,8 @@ body {
 }
 
 #Bienvenida{
-  opacity: 0.6;
   font-size: 20px;
-  color: lightgray;
+  color: #716F81;
   font-family:'Courier New', Courier, monospace;
   background-color: #f8ede3;
 }
